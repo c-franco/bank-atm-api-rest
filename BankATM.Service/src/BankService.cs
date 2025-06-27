@@ -15,26 +15,32 @@ namespace BankATM.Service
             _repository = repository;
         }
 
-        public async Task<List<BankAccount>> GetAllAccounts()
+        #region Public methods
+
+        public async Task<List<BankAccountResponseDTO>> GetAllAccounts()
         {
             List<BankAccount> accounts = await _repository.GetAll();
-            
-            return accounts;
+
+            List<BankAccountResponseDTO> result = MapBankAccountsToDTO(accounts);
+
+            return result;
         }
 
-        public async Task<BankAccount> GetByAccountNumber(string accountNumber)
+        public async Task<BankAccountResponseDTO> GetByAccountNumber(string accountNumber)
         {
             BankAccount account = await _repository.GetByAccountNumber(accountNumber);
 
             if (account == null)
                 throw new KeyNotFoundException(GlobalErrors.AccountNotFound);
 
-            return account;
+            BankAccountResponseDTO result = MapBankAccountToDTO(account);
+
+            return result;
         }
 
         public async Task Deposit(DepositRequestDTO request)
         {
-            BankAccount account = await GetByAccountNumber(request.AccountNumber);
+            BankAccount account = await _repository.GetByAccountNumber(request.AccountNumber);
 
             account.Deposit(request.Amount);
             await _repository.SaveAsync();
@@ -42,10 +48,31 @@ namespace BankATM.Service
 
         public async Task Withdraw(WithdrawRequestDTO request)
         {
-            BankAccount account = await GetByAccountNumber(request.AccountNumber);
+            BankAccount account = await _repository.GetByAccountNumber(request.AccountNumber);
 
             account.Withdraw(request.Amount);
             await _repository.SaveAsync();
         }
+
+        #endregion
+
+        #region Private methods
+
+        private List<BankAccountResponseDTO> MapBankAccountsToDTO(List<BankAccount> accounts)
+        {
+            return accounts.Select(MapBankAccountToDTO).ToList();
+        }
+
+        private BankAccountResponseDTO MapBankAccountToDTO(BankAccount account)
+        {
+            return new BankAccountResponseDTO
+            {
+                AccountNumber = account.AccountNumber,
+                Entity = account.Entity,
+                Balance = account.Balance
+            };
+        }
+
+        #endregion
     }
 }

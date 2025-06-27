@@ -10,7 +10,7 @@ namespace BankATM.Common.DTO
         public string AccountNumber { get; set; }
 
         [Required(ErrorMessage = GlobalErrors.AmountRequired)]
-        [Range(0.01, double.MaxValue, ErrorMessage = GlobalErrors.AmountInvalid)]
+        [Range(0.01, 3000.00, ErrorMessage = GlobalErrors.AmountInvalid)]
         public decimal Amount { get; set; }
     }
 }

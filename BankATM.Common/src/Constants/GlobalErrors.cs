@@ -3,7 +3,9 @@
     public class GlobalErrors
     {
         public const string UsernameRequired = "Username is required.";
+        public const string UsernameLength = "The username must be between 3 and 50 characters.";
         public const string PasswordRequired = "Password is required.";
+        public const string PasswordLength = "The password must be between 6 and 50 characters long.";
 
         public const string AccountNumberRequired = "Account number is required.";
         public const string AmountRequired = "Amount is required.";
@@ -17,5 +19,6 @@
         public const string AccountNotFound = "Account not found.";
 
         public const string InvalidJwtToken = "Unauthorized. The token is invalid or expired.";
+        public const string InvalidCredentials = "Invalid credentials.";
     }
 }

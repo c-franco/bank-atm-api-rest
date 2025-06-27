@@ -27,20 +27,11 @@ namespace BankATM.Controllers
 
         [Authorize]
         [HttpGet("All")]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<List<BankAccountResponseDTO>>> GetAll()
         {
             var accounts = await _service.GetAllAccounts();
 
-            return Ok(ApiResponse<List<BankAccount>>.Ok(accounts));
-        }
-
-        [Authorize]
-        [HttpGet("{accountNumber}")]
-        public async Task<IActionResult> GetByAccountNumber(string accountNumber)
-        {
-            BankAccount account = await _service.GetByAccountNumber(accountNumber);
-
-            return Ok(ApiResponse<BankAccount>.Ok(account));
+            return Ok(ApiResponse<List<BankAccountResponseDTO>>.Ok(accounts));
         }
 
         #endregion
@@ -48,8 +39,17 @@ namespace BankATM.Controllers
         #region Post
 
         [Authorize]
+        [HttpPost("GetByAccountNumber")]
+        public async Task<ActionResult<BankAccountResponseDTO>> GetByAccountNumber(AccountRequestDTO request)
+        {
+            BankAccountResponseDTO account = await _service.GetByAccountNumber(request.AccountNumber);
+
+            return Ok(ApiResponse<BankAccountResponseDTO>.Ok(account));
+        }
+
+        [Authorize]
         [HttpPost("Deposit")]
-        public async Task<IActionResult> Deposit(DepositRequestDTO request)
+        public async Task<ActionResult<string>> Deposit(DepositRequestDTO request)
         {
             await _service.Deposit(request);
 
@@ -58,7 +58,7 @@ namespace BankATM.Controllers
 
         [Authorize]
         [HttpPost("Withdraw")]
-        public async Task<ActionResult> Withdraw(WithdrawRequestDTO request)
+        public async Task<ActionResult<string>> Withdraw(WithdrawRequestDTO request)
         {
             await _service.Withdraw(request);
 

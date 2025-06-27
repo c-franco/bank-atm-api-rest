@@ -13,54 +13,31 @@ namespace BankATM.Middleware
             _next = next;
         }
 
-        public async Task Invoke(HttpContext content)
+        public async Task Invoke(HttpContext context)
         {
             try
             {
-                await _next(content);
+                await _next(context);
             }
             catch (Exception error)
             {
-                var response = content.Response;
-                HttpStatusCode statusCode = HttpStatusCode.BadRequest;
+                context.Response.ContentType = "application/json";
 
-                switch (error)
+                var statusCode = error switch
                 {
-                    case KeyNotFoundException e:
-                        statusCode = HttpStatusCode.NotFound;
-                        response.StatusCode = (int)HttpStatusCode.NotFound;
-                        break;
+                    NotFoundException => HttpStatusCode.NotFound,
+                    BusinessException => HttpStatusCode.BadRequest,
+                    UnauthorizedException => HttpStatusCode.Unauthorized,
+                    KeyNotFoundException => HttpStatusCode.NotFound,
+                    ArgumentException => HttpStatusCode.BadRequest,
+                    InvalidOperationException => HttpStatusCode.BadRequest,
+                    _ => HttpStatusCode.InternalServerError
+                };
 
-                    case ArgumentException e:
-                        statusCode = HttpStatusCode.BadRequest;
-                        response.StatusCode = (int)HttpStatusCode.BadRequest;
-                        break;
+                context.Response.StatusCode = (int)statusCode;
 
-                    case InvalidOperationException e:
-                        statusCode = HttpStatusCode.BadRequest;
-                        response.StatusCode = (int)HttpStatusCode.BadRequest;
-                        break;
-
-                    case UnauthorizedException e:
-                        statusCode = HttpStatusCode.Unauthorized;
-                        response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                        break;
-
-                    case Exception e:
-                        statusCode = HttpStatusCode.BadRequest;
-                        response.StatusCode = (int)HttpStatusCode.BadRequest;
-                        break;
-
-                    default:
-                        statusCode = HttpStatusCode.InternalServerError;
-                        response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                        break;
-                }
-
-                content.Response.StatusCode = response.StatusCode;
-                content.Response.ContentType = "application/json";
                 var result = ApiResponse<string>.Fail(error.Message);
-                await content.Response.WriteAsJsonAsync(result);
+                await context.Response.WriteAsJsonAsync(result);
             }
         }
     }

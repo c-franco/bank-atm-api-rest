@@ -25,12 +25,9 @@ namespace BankATM.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Auth(LoginRequestDTO request)
+        public async Task<ActionResult<string>> Auth(LoginRequestDTO request)
         {
             var token = await _authService.AuthenticateAsync(request);
-
-            if (token == null)
-                return Unauthorized();
 
             return Ok(ApiResponse<string>.Ok(token));
         }

@@ -1,4 +1,6 @@
-﻿using BankATM.Common.DTO;
+﻿using BankATM.Common.Constants;
+using BankATM.Common.DTO;
+using BankATM.Common.Exceptions;
 using BankATM.Common.Settings;
 using BankATM.Service.Interface;
 using Microsoft.Extensions.Options;
@@ -38,9 +40,11 @@ namespace BankATM.Service
                 );
 
                 return new JwtSecurityTokenHandler().WriteToken(token);
+            } 
+            else
+            {
+                throw new UnauthorizedException(GlobalErrors.InvalidCredentials);
             }
-
-            return null;
         }
     }
 }

@@ -11,8 +11,6 @@ namespace BankATM.Domain
 
         public decimal Balance { get; set; }
 
-        public int PersonId { get; set; }
-
         public Person Person { get; set; } = null!;
 
         public void Deposit(decimal amount)
