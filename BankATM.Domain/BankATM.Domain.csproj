@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BankATM.Common\BankATM.Common.csproj" />
-  </ItemGroup>
-
 </Project>

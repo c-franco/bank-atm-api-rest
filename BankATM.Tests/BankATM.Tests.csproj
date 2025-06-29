@@ -21,12 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BankATM.Domain\BankATM.Domain.csproj" />
-    <ProjectReference Include="..\BankATM.Service.Interface\BankATM.Service.Interface.csproj" />
-    <ProjectReference Include="..\BankATM\BankATM.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 
