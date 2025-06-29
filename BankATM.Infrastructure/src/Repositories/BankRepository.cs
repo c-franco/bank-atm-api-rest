@@ -3,7 +3,7 @@ using BankATM.Domain.Interfaces.Repositories;
 using BankATM.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace BankATM.Infrastructure.Repository
+namespace BankATM.Infrastructure.Repositories
 {
     public class BankRepository : IBankRepository
     {

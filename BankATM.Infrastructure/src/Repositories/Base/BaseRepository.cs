@@ -2,7 +2,7 @@
 using BankATM.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace BankATM.Infrastructure.Repository.Base
+namespace BankATM.Infrastructure.Repositories.Base
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {

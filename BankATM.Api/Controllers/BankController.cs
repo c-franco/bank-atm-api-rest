@@ -43,7 +43,7 @@ namespace BankATM.Api.Controllers
         [HttpPost("GetByAccountNumber")]
         public async Task<ActionResult<BankAccountResponseDTO>> GetByAccountNumber(AccountRequestDTO request)
         {
-            var result = await _mediator.Send(new GetAccountByNumberQuery(request.AccountNumber));
+            var result = await _mediator.Send(new GetAccountByNumberQuery(request));
 
             return Ok(ApiResponse<BankAccountResponseDTO>.Ok(result));
         }
@@ -52,7 +52,7 @@ namespace BankATM.Api.Controllers
         [HttpPost("Deposit")]
         public async Task<ActionResult<string>> Deposit(DepositRequestDTO request)
         {
-            await _mediator.Send(new DepositCommand(request.AccountNumber, request.Amount));
+            await _mediator.Send(new DepositCommand(request));
 
             return Ok(ApiResponse<string>.Ok(GlobalMessages.SuccessfulDeposit));
         }
@@ -61,7 +61,7 @@ namespace BankATM.Api.Controllers
         [HttpPost("Withdraw")]
         public async Task<ActionResult<string>> Withdraw(WithdrawRequestDTO request)
         {
-            await _mediator.Send(new WithdrawCommand(request.AccountNumber, request.Amount));
+            await _mediator.Send(new WithdrawCommand(request));
 
             return Ok(ApiResponse<string>.Ok(GlobalMessages.SuccessfulWithdrawal));
         }

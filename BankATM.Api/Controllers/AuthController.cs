@@ -20,7 +20,7 @@ namespace BankATM.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult> Auth([FromBody] LoginRequestDTO request)
+        public async Task<ActionResult> Auth(LoginRequestDTO request)
         {
             var token = await _mediator.Send(new AuthenticateCommand(request));
 

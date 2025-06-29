@@ -15,9 +15,9 @@ namespace BankATM.Application.Handlers
             _repository = repository;
         }
 
-        public async Task<BankAccountResponseDTO> Handle(GetAccountByNumberQuery request, CancellationToken cancellationToken)
+        public async Task<BankAccountResponseDTO> Handle(GetAccountByNumberQuery query, CancellationToken cancellationToken)
         {
-            var account = await _repository.GetByAccountNumber(request.AccountNumber);
+            var account = await _repository.GetByAccountNumber(query.Request.AccountNumber);
 
             if (account == null)
                 throw new Exception(GlobalErrors.AccountNotFound);

@@ -1,6 +1,5 @@
 ﻿using BankATM.Application.Commands;
 using BankATM.Domain.Constants;
-using BankATM.Domain.Entities;
 using BankATM.Domain.Interfaces.Repositories;
 using MediatR;
 
@@ -15,14 +14,14 @@ namespace BankATM.Application.Handlers
             _repository = repository;
         }
 
-        public async Task<Unit> Handle(DepositCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DepositCommand command, CancellationToken cancellationToken)
         {
-            BankAccount account = await _repository.GetByAccountNumber(request.AccountNumber);
+            var account = await _repository.GetByAccountNumber(command.Request.AccountNumber);
 
             if (account == null)
                 throw new Exception(GlobalErrors.AccountNotFound);
 
-            account.Deposit(request.Amount);
+            account.Deposit(command.Request.Amount);
 
             await _repository.SaveAsync();
 

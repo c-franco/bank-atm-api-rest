@@ -14,14 +14,14 @@ namespace BankATM.Application.Handlers
             _repository = repository;
         }
 
-        public async Task<Unit> Handle(WithdrawCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(WithdrawCommand command, CancellationToken cancellationToken)
         {
-            var account = await _repository.GetByAccountNumber(request.AccountNumber);
+            var account = await _repository.GetByAccountNumber(command.Request.AccountNumber);
 
             if (account == null)
                 throw new Exception(GlobalErrors.AccountNotFound);
 
-            account.Withdraw(request.Amount);
+            account.Withdraw(command.Request.Amount);
 
             await _repository.SaveAsync();
 

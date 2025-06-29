@@ -14,7 +14,7 @@ namespace BankATM.Application.Handlers
             _repository = repository;
         }
 
-        public async Task<List<BankAccountResponseDTO>> Handle(GetAllAccountsQuery request, CancellationToken cancellationToken)
+        public async Task<List<BankAccountResponseDTO>> Handle(GetAllAccountsQuery query, CancellationToken cancellationToken)
         {
             var accounts = await _repository.GetAll();
 

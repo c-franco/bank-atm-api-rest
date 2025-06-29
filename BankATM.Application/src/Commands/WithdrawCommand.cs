@@ -1,6 +1,7 @@
-﻿using MediatR;
+﻿using BankATM.Application.DTO;
+using MediatR;
 
 namespace BankATM.Application.Commands
 {
-    public record WithdrawCommand(string AccountNumber, decimal Amount) : IRequest<Unit>;
+    public record WithdrawCommand(WithdrawRequestDTO Request) : IRequest<Unit>;
 }

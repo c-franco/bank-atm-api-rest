@@ -20,10 +20,10 @@ namespace BankATM.Application.Handlers
             _jwtSettings = jwtSettings.Value;
         }
 
-        public async Task<string> Handle(AuthenticateCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(AuthenticateCommand command, CancellationToken cancellationToken)
         {
-            var username = request.LoginRequest.Username;
-            var password = request.LoginRequest.Password;
+            var username = command.Request.Username;
+            var password = command.Request.Password;
 
             if (username == "admin" && password == "123456")
             {

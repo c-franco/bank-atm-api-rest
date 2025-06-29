@@ -3,5 +3,5 @@ using MediatR;
 
 namespace BankATM.Application.Queries
 {
-    public record GetAccountByNumberQuery(string AccountNumber) : IRequest<BankAccountResponseDTO>;
+    public record GetAccountByNumberQuery(AccountRequestDTO Request) : IRequest<BankAccountResponseDTO>;
 }
