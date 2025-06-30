@@ -1,4 +1,4 @@
-# BankATM API
+# Bank ATM ASP.NET Web API with Clean Architecture
 
 ## Description
 
