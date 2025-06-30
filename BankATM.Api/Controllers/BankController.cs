@@ -27,7 +27,7 @@ namespace BankATM.Api.Controllers
         #region Get
 
         [Authorize]
-        [HttpGet("All")]
+        [HttpGet]
         public async Task<ActionResult<List<BankAccountResponseDTO>>> GetAll()
         {
             var result = await _mediator.Send(new GetAllAccountsQuery());
@@ -40,7 +40,7 @@ namespace BankATM.Api.Controllers
         #region Post
 
         [Authorize]
-        [HttpPost("GetByAccountNumber")]
+        [HttpPost("getByAccountNumber")]
         public async Task<ActionResult<BankAccountResponseDTO>> GetByAccountNumber(AccountRequestDTO request)
         {
             var result = await _mediator.Send(new GetAccountByNumberQuery(request));
@@ -49,7 +49,7 @@ namespace BankATM.Api.Controllers
         }
 
         [Authorize]
-        [HttpPost("Deposit")]
+        [HttpPost("deposit")]
         public async Task<ActionResult<string>> Deposit(DepositRequestDTO request)
         {
             await _mediator.Send(new DepositCommand(request));
@@ -58,7 +58,7 @@ namespace BankATM.Api.Controllers
         }
 
         [Authorize]
-        [HttpPost("Withdraw")]
+        [HttpPost("withdraw")]
         public async Task<ActionResult<string>> Withdraw(WithdrawRequestDTO request)
         {
             await _mediator.Send(new WithdrawCommand(request));
